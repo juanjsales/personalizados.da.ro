@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizados da Rô</title>
+    <style>
+        :root {
+            --primary: #e46879;
+            --primary-dark: #bf5063;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #efaeb1;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header img {
+            height: 100px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            background: white;
+            padding: 10px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 2rem;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #fff5f6, #fef2f2);
+            box-shadow: 0 0 20px rgba(228, 104, 121, 0.3);
+        }
+
+        .card.selected:before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .card p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            text-align: center;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 1rem;
+        }
+
+        .form-input {
+            padding: 0.875rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(228, 104, 121, 0.1);
+        }
+
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .color-section {
+            margin-top: 1rem;
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .color-input {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            border: 2px solid var(--gray-300);
+        }
+
+        .add-color-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .add-color-btn:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        .color-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .color-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 0.5rem;
+            border: 2px solid var(--gray-300);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .color-preview:hover {
+            transform: scale(1.1);
+        }
+
+        .color-preview .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary {
+            background: var(--gray-100);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .summary-label {
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .summary-value {
+            color: var(--gray-900);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(228, 104, 121, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(228, 104, 121, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .custom-style-input {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .custom-style-input.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .form-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e46879'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-weight='bold'%3ERô%3C/text%3E%3C/svg%3E" alt="Logo">
+            <h1>Personalizados da Rô</h1>
+            <p>Transformando seus momentos especiais em lembranças únicas</p>
+        </div>
+
+        <div class="form-container">
+            <!-- Seção 1: Escolha do Estilo -->
+            <div class="section">
+                <h2 class="section-title">Escolha o Estilo do Topo</h2>
+                <div class="grid">
+                    <div class="card" data-style="convencional" onclick="selectStyle('convencional')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f8d7da'/%3E%3Ccircle cx='150' cy='100' r='60' fill='%23e46879'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='white' font-size='16'%3ESimples%3C/text%3E%3C/svg%3E" alt="Bolo Convencional">
+                        <h3>Bolo Convencional</h3>
+                        <p>Topo tradicional colorido com acabamento folha única</p>
+                    </div>
+                    <div class="card" data-style="3d" onclick="selectStyle('3d')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23fff3cd'/%3E%3Cpath d='M120 80 L150 50 L180 80 L180 130 L150 160 L120 130 Z' fill='%23ffc107'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='%23856404' font-size='14'%3E3D%3C/text%3E%3C/svg%3E" alt="Bolo 3D">
+                        <h3>Bolo com Topo 3D</h3>
+                        <p>Topo personalizado em 3D</p>
+                    </div>
+                    <div class="card" data-style="outros" onclick="selectStyle('outros')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23d1ecf1'/%3E%3Cpath d='M50 100 Q150 50 250 100 Q150 150 50 100' fill='%2317a2b8'/%3E%3Ctext x='150' y='110' text-anchor='middle' fill='white' font-size='14'%3EOutros%3C/text%3E%3C/svg%3E" alt="Outro Estilo">
+                        <h3>Outro Estilo</h3>
+                        <p>Tem alguma ideia? Podemos ajudar, só escrever aqui.</p>
+                    </div>
+                </div>
+                <div class="custom-style-input" id="customStyleInput">
+                    <div class="form-group">
+                        <label class="form-label">Descreva como deseja o topo</label>
+                        <textarea class="form-input textarea" placeholder="Descreva seu estilo personalizado..." oninput="updateData('customStyleDescription', this.value)"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 2: Tamanho do Bolo -->
+            <div class="section">
+                <h2 class="section-title">Defina o Tamanho do Bolo</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Aro (cm)</label>
+                        <input type="number" class="form-input" min="10" max="50" placeholder="Digite o tamanho do aro" oninput="updateData('aro', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Altura (cm)</label>
+                        <input type="number" class="form-input" min="5" max="30" placeholder="Digite a altura do bolo" oninput="updateData('altura', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 3: Personalização de Cores -->
+            <div class="section">
+                <h2 class="section-title">Personalização de Cores</h2>
+                <div class="color-section">
+                    <label class="form-label">Escolha as cores (Opcional)</label>
+                    <div class="color-picker-container">
+                        <input type="color" class="color-input" id="colorInput">
+                        <button type="button" class="add-color-btn" onclick="addColor()">Adicionar Cor</button>
+                    </div>
+                    <div class="color-preview-container" id="colorPreviewContainer"></div>
+                </div>
+            </div>
+
+            <!-- Seção 4: Detalhes Adicionais -->
+            <div class="section">
+                <h2 class="section-title">Detalhes do Pedido</h2>
+                <div class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Data de Entrega</label>
+                            <input type="date" class="form-input" oninput="updateData('deliveryDate', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Texto para o Tema do Bolo</label>
+                            <input type="text" class="form-input" placeholder="Insira o texto para o tema do bolo" oninput="updateData('cakeThemeText', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Descrição do Pedido</label>
+                        <textarea class="form-input textarea" placeholder="Descreva os detalhes do seu pedido..." oninput="updateData('description', this.value)"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 5: Dados Pessoais -->
+            <div class="section">
+                <h2 class="section-title">Dados Pessoais</h2>
+                <div class="form">
+                    <div class="form-group">
+                        <label class="form-label">Nome Completo</label>
+                        <input type="text" class="form-input" placeholder="Digite seu nome completo" oninput="updateData('name', this.value)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Telefone (WhatsApp)</label>
+                            <input type="tel" class="form-input" placeholder="Digite seu número de WhatsApp" oninput="updateData('phone', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-input" placeholder="Digite seu e-mail" oninput="updateData('email', this.value)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 6: Resumo -->
+            <div class="section">
+                <h2 class="section-title">Resumo do Pedido</h2>
+                <div class="summary" id="summary">
+                    <!-- Resumo será preenchido automaticamente -->
+                </div>
+                <button class="submit-btn" onclick="submitOrder()">Confirmar Pedido via WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado do formulário
+        const formData = {
+            style: '',
+            customStyleDescription: '',
+            aro: '',
+            altura: '',
+            customColors: [],
+            deliveryDate: '',
+            cakeThemeText: '',
+            description: '',
+            name: '',
+            phone: '',
+            email: '',
+            price: 0
+        };
+
+        // Seleção de estilo
+        function selectStyle(styleId) {
+            formData.style = styleId;
+            
+            // Remove seleção anterior
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Adiciona seleção atual
+            document.querySelector(`[data-style="${styleId}"]`).classList.add('selected');
+            
+            // Mostra/esconde campo customizado
+            const customInput = document.getElementById('customStyleInput');
+            if (styleId === 'outros') {
+                customInput.classList.add('show');
+            } else {
+                customInput.classList.remove('show');
+                formData.customStyleDescription = '';
+            }
+            
+            updateSummary();
+        }
+
+        // Atualizar dados
+        function updateData(field, value) {
+            formData[field] = value;
+            updateSummary();
+        }
+
+        // Adicionar cor
+        function addColor() {
+            const colorInput = document.getElementById('colorInput');
+            const color = colorInput.value;
+            
+            if (!formData.customColors.includes(color)) {
+                formData.customColors.push(color);
+                updateColorPreview();
+                updateSummary();
+            }
+        }
+
+        // Atualizar preview de cores
+        function updateColorPreview() {
+            const container = document.getElementById('colorPreviewContainer');
+            container.innerHTML = '';
+            
+            formData.customColors.forEach((color, index) => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'color-preview';
+                colorDiv.style.backgroundColor = color;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '×';
+                removeBtn.onclick = () => removeColor(index);
+                
+                colorDiv.appendChild(removeBtn);
+                container.appendChild(colorDiv);
+            });
+        }
+
+        // Remover cor
+        function removeColor(index) {
+            formData.customColors.splice(index, 1);
+            updateColorPreview();
+            updateSummary();
+        }
+
+        // Calcular preço
+        function calculatePrice() {
+            const basePrice = 50;
+            const aro = parseInt(formData.aro) || 0;
+            const altura = parseInt(formData.altura) || 0;
+            const sizeFactor = (aro * altura) * 0.5;
+            
+            let styleFactor = 0;
+            if (formData.style === '3d' || formData.style === 'outros') {
+                styleFactor = 30;
+            }
+            
+            formData.price = basePrice + sizeFactor + styleFactor;
+        }
+
+        // Atualizar resumo
+        function updateSummary() {
+            calculatePrice();
+            
+            const summary = document.getElementById('summary');
+            const styleNames = {
+                'convencional': 'Bolo Convencional',
+                '3d': 'Bolo com Topo 3D',
+                'outros': 'Outro Estilo'
+            };
+            
+            summary.innerHTML = `
+                <div class="summary-item">
+                    <span class="summary-label">Nome:</span>
+                    <span class="summary-value">${formData.name || 'Não informado'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Telefone:</span>
+                    <span class="summary-value">${formData.phone || 'Não informado'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">E-mail:</span>
+                    <span class="summary-value">${formData.email || 'Não informado'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Estilo:</span>
+                    <span class="summary-value">${styleNames[formData.style] || 'Não selecionado'}</span>
+                </div>
+                ${formData.customStyleDescription ? `
+                <div class="summary-item">
+                    <span class="summary-label">Descrição do Estilo:</span>
+                    <span class="summary-value">${formData.customStyleDescription}</span>
+                </div>` : ''}
+                <div class="summary-item">
+                    <span class="summary-label">Tamanho:</span>
+                    <span class="summary-value">Aro ${formData.aro || '-'} cm, Altura ${formData.altura || '-'} cm</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Cores:</span>
+                    <span class="summary-value">${formData.customColors.length ? formData.customColors.join(', ') : 'Nenhuma cor personalizada'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Data de Entrega:</span>
+                    <span class="summary-value">${formData.deliveryDate || 'Não informada'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Tema do Bolo:</span>
+                    <span class="summary-value">${formData.cakeThemeText || 'Não informado'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Descrição:</span>
+                    <span class="summary-value">${formData.description || 'Não informada'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Preço Estimado:</span>
+                    <span class="summary-value">R$ ${formData.price.toFixed(2)}</span>
+                </div>
+            `;
+        }
+
+        // Enviar pedido
+        function submitOrder() {
+            // Validações básicas
+            if (!formData.name || !formData.phone || !formData.style) {
+                alert('Por favor, preencha ao menos o nome, telefone e escolha um estilo antes de confirmar o pedido.');
+                return;
+            }
+
+            const phone = "+5521997148263";
+            const styleNames = {
+                'convencional': 'Bolo Convencional',
+                '3d': 'Bolo com Topo 3D',
+                'outros': 'Outro Estilo'
+            };
+            
+            const message = encodeURIComponent(`
+*Novo Pedido - Personalizados da Rô*
+
+*Dados Pessoais:*
+Nome: ${formData.name}
+Telefone: ${formData.phone}
+E-mail: ${formData.email || 'Não informado'}
+
+*Detalhes do Pedido:*
+Estilo: ${styleNames[formData.style]}
+${formData.customStyleDescription ? `Descrição do Estilo: ${formData.customStyleDescription}` : ''}
+Tamanho: Aro ${formData.aro || '-'} cm, Altura ${formData.altura || '-'} cm
+Cores: ${formData.customColors.length ? formData.customColors.join(', ') : 'Nenhuma cor personalizada'}
+Data de Entrega: ${formData.deliveryDate || 'Não informada'}
+Tema do Bolo: ${formData.cakeThemeText || 'Não informado'}
+Descrição: ${formData.description || 'Não informada'}
+
+*Preço Estimado:* R$ ${formData.price.toFixed(2)}
+            `);
+
+            window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSummary();
+        });
+    </script>
+</body>
+</html>
