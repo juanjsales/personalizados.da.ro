@@ -1,45 +1,67 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Star, Trophy } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Heart, Star, Trophy, Brush } from 'lucide-react';
 
 export const About = () => {
   return (
-    <section id="sobre" className="py-16 hero-gradient">
+    <section id="sobre" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Nossa Paixão por Papelaria</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-left">
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                A Personalizados da Rô nasceu do amor por transformar papel em arte. Cada peça é uma oportunidade de levar mais charme e personalidade para sua celebração.
-              </p>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                Com materiais de alta qualidade e um olhar atento aos detalhes, criamos decorações que se destacam e marcam momentos felizes.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <Badge variant="secondary" className="text-sm">
-                  <Heart className="w-3 h-3 mr-1" />
-                  Feito sob Encomenda
-                </Badge>
-                <Badge variant="secondary" className="text-sm">
-                  <Star className="w-3 h-3 mr-1" />
-                  Papelaria Premium
-                </Badge>
-                <Badge variant="secondary" className="text-sm">
-                  <Trophy className="w-3 h-3 mr-1" />
-                  Design Exclusivo
-                </Badge>
+        <div className="max-w-5xl mx-auto">
+           <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+               <span className="bg-gradient-to-br from-primary via-primary/80 to-secondary bg-clip-text text-transparent">
+                Nossa Paixão por Papelaria
+              </span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              A Personalizados da Rô nasceu do amor por transformar papel em arte. Cada peça é uma oportunidade de levar mais charme e personalidade para sua celebração.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="relative flex items-center justify-center">
+              <Brush className="w-64 h-64 text-primary/10" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <p className="text-3xl font-bold text-center text-foreground/80 leading-tight -rotate-12">
+                  Feito com <br/> <span className="text-primary text-5xl">amor</span><br/> e carinho
+                </p>
               </div>
             </div>
             <div className="space-y-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold text-gray-800 mb-2">Nossa Missão</h3>
-                <p className="text-gray-600">Criar topos e decorações de papel que traduzam a essência de cada celebração.</p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Com materiais de alta qualidade e um olhar atento aos detalhes, criamos decorações que se destacam e marcam momentos felizes.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Badge variant="secondary" className="text-sm py-1 px-3">
+                  <Heart className="w-3.5 h-3.5 mr-1.5" />
+                  Feito sob Encomenda
+                </Badge>
+                <Badge variant="secondary" className="text-sm py-1 px-3">
+                  <Star className="w-3.5 h-3.5 mr-1.5" />
+                  Papelaria Premium
+                </Badge>
+                <Badge variant="secondary" className="text-sm py-1 px-3">
+                  <Trophy className="w-3.5 h-3.5 mr-1.5" />
+                  Design Exclusivo
+                </Badge>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold text-gray-800 mb-2">Nossos Valores</h3>
-                <p className="text-gray-600">Criatividade, pontualidade, qualidade e carinho em cada recorte.</p>
-              </div>
+               <Card className="bg-muted/30 border-border/60">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Nossa Missão</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Criar topos e decorações de papel que traduzam a essência de cada celebração.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-muted/30 border-border/60">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Nossos Valores</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Criatividade, pontualidade, qualidade e carinho em cada recorte.</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>

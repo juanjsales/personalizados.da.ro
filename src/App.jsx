@@ -66,13 +66,13 @@ const App = () => {
 
       {/* WhatsApp Float Button */}
       <div className="fixed bottom-6 right-6 z-50">
-        <Button 
-          onClick={openWhatsApp}
-          className="whatsapp-button text-white rounded-full w-14 h-14 shadow-lg"
-          size="lg"
-        >
-          <MessageCircle className="w-6 h-6" />
-        </Button>
+<Button
+  onClick={openWhatsApp}
+  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-transform duration-200"
+  size="lg"
+>
+  <MessageCircle className="w-6 h-6" />
+</Button>
       </div>
     </div>
   );

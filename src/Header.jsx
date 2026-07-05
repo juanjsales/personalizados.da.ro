@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Menu, X } from 'lucide-react';
+import { MessageCircle, Menu } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
@@ -15,11 +18,10 @@ const navItems = [
 ];
 
 export const Header = ({ activeSection, scrollToSection, openWhatsApp }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleScrollAndCloseMenu = (sectionId) => {
+    // A Sheet gerencia seu próprio estado de abertura/fechamento, então não precisamos mais do setIsMenuOpen
     scrollToSection(sectionId);
-    setIsMenuOpen(false);
   };
 
   return (
@@ -44,41 +46,40 @@ export const Header = ({ activeSection, scrollToSection, openWhatsApp }) => {
             ))}
           </nav>
 
-          <Button onClick={openWhatsApp} className="whatsapp-button text-white hidden md:flex">
-            <MessageCircle className="w-4 h-4 mr-2" />
-            WhatsApp
-          </Button>
-
           <div className="md:hidden">
-            <Button onClick={() => setIsMenuOpen(!isMenuOpen)} variant="ghost" size="icon">
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader className="text-left">
+                  <SheetTitle>Navegação</SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col items-start space-y-4 mt-8">
+                  {navItems.map((item) => (
+                    <SheetTrigger asChild key={item.id}>
+                      <button
+                        onClick={() => handleScrollAndCloseMenu(item.id)}
+                        className={`text-lg font-medium transition-colors hover:text-primary ${
+                          activeSection === item.id ? 'text-primary' : 'text-muted-foreground'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    </SheetTrigger>
+                  ))}
+                  <Button onClick={openWhatsApp} className="whatsapp-button text-white w-full mt-4">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    WhatsApp
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white pb-4">
-          <nav className="flex flex-col items-center space-y-4">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleScrollAndCloseMenu(item.id)}
-                className={`text-lg font-medium transition-colors hover:text-primary ${
-                  activeSection === item.id ? 'text-primary' : 'text-muted-foreground'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-            <Button onClick={openWhatsApp} className="whatsapp-button text-white w-3/4">
-              <MessageCircle className="w-4 h-4 mr-2" />
-              WhatsApp
-            </Button>
-          </nav>
-        </div>
-      )}
     </header>
   );
 };

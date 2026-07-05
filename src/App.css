@@ -119,33 +119,6 @@
   }
 }
 
-/* Estilos personalizados para a confeitaria */
-.hero-gradient {
-  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
-}
-
-.cake-card {
-  transition: all 0.3s ease;
-}
-
-.cake-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.whatsapp-button {
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-  transition: all 0.3s ease;
-}
-
-.whatsapp-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
-}
-
-.section-fade-in {
-  animation: fadeInUp 0.8s ease-out;
-}
 
 @keyframes fadeInUp {
   from {
